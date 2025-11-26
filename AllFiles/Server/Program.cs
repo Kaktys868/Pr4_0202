@@ -144,29 +144,9 @@ namespace Server
                             {
                                 string[] DataMessage = ViewModelSend.Message.Split(new string[1] { " " }, StringSplitOptions.None);
                                 string getFile = "";
-                                for (int i = 1; i < DataMessage.Length; i++)
                                 {
                                     if (getFile == "") getFile += DataMessage[i];
                                     else getFile += " " + DataMessage[i];
-                                }
-
-                                try
-                                {
-                                    string filePath = Users[ViewModelSend.Id].temp_src + getFile;
-                                    if (File.Exists(filePath))
-                                    {
-                                        byte[] byteFile = File.ReadAllBytes(filePath);
-                                        FileInfoFTP fileInfo = new FileInfoFTP(byteFile, Path.GetFileName(getFile));
-                                        viewModelMessage = new ViewModelMessage("get", JsonConvert.SerializeObject(fileInfo));
-                                    }
-                                    else
-                                    {
-                                        viewModelMessage = new ViewModelMessage("message", $"Файл '{filePath}' не найден");
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    viewModelMessage = new ViewModelMessage("message", $"Ошибка при чтении файла: {ex.Message}");
                                 }
                             }
                             else
@@ -182,7 +162,6 @@ namespace Server
                             if (ViewModelSend.Id != -1)
                             {
                                 FileInfoFTP SendFileInfo = JsonConvert.DeserializeObject<FileInfoFTP>(ViewModelSend.Message);
-                                File.WriteAllBytes(Users[ViewModelSend.Id].temp_src + SendFileInfo.Name, SendFileInfo.Data);
                                 viewModelMessage = new ViewModelMessage("message", "Файл загружен");
                             }
                             else

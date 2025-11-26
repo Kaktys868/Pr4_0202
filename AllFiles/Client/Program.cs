@@ -123,7 +123,11 @@ namespace Client
                             foreach (string Name in FoldersFiles)
                                 Console.WriteLine(Name);
                         }
+<<<<<<< HEAD
                         else if (viewModelMessage.Command == "get")
+=======
+                        else if (viewModelMessage.Command == "file")
+>>>>>>> ca1901474a42e43156dabac66486da056433aaf7
                         {
                             string[] DataMessage = viewModelSend.Message.Split(new string[1] { " " }, StringSplitOptions.None);
                             string getFile = "";
@@ -132,6 +136,7 @@ namespace Client
                                     getFile = DataMessage[i];
                                 else
                                     getFile += " " + DataMessage[i];
+<<<<<<< HEAD
 
                             try
                             {
@@ -145,6 +150,10 @@ namespace Client
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine($"Ошибка при сохранении файла: {ex.Message}");
                             }
+=======
+                            byte[] byteFile = JsonConvert.DeserializeObject<byte[]>(viewModelMessage.Data);
+                            File.WriteAllBytes(getFile, byteFile);
+>>>>>>> ca1901474a42e43156dabac66486da056433aaf7
                         }
                     }
                 }
