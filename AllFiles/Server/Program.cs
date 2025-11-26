@@ -18,7 +18,7 @@ namespace Server
         public static int Port;
         static void Main(string[] args)
         {
-            Users.Add(new User("admin","admin", @"C:\Users\student-a502.PERMAVIAT\"));
+            //Users.Add(new User("admin","admin", @"C:\Users\student-a502.PERMAVIAT\"));
 
             Console.Write("Введите IP адрес сервера: ");
             string sIdAddress = Console.ReadLine();
@@ -144,10 +144,39 @@ namespace Server
                             {
                                 string[] DataMessage = ViewModelSend.Message.Split(new string[1] { " " }, StringSplitOptions.None);
                                 string getFile = "";
+<<<<<<< HEAD
+                                for (int i = 1; i < DataMessage.Length; i++)
+=======
+                                for (int i = 0; i < DataMessage.Length; i++)
+>>>>>>> ca1901474a42e43156dabac66486da056433aaf7
                                 {
                                     if (getFile == "") getFile += DataMessage[i];
                                     else getFile += " " + DataMessage[i];
                                 }
+<<<<<<< HEAD
+
+                                try
+                                {
+                                    string filePath = Users[ViewModelSend.Id].temp_src + getFile;
+                                    if (File.Exists(filePath))
+                                    {
+                                        byte[] byteFile = File.ReadAllBytes(filePath);
+                                        FileInfoFTP fileInfo = new FileInfoFTP(byteFile, Path.GetFileName(getFile));
+                                        viewModelMessage = new ViewModelMessage("get", JsonConvert.SerializeObject(fileInfo));
+                                    }
+                                    else
+                                    {
+                                        viewModelMessage = new ViewModelMessage("message", $"Файл '{filePath}' не найден");
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    viewModelMessage = new ViewModelMessage("message", $"Ошибка при чтении файла: {ex.Message}");
+                                }
+=======
+                                byte[] byteFile = File.ReadAllBytes(Users[ViewModelSend.Id].temp_src + getFile);
+                                viewModelMessage = new ViewModelMessage("file", JsonConvert.SerializeObject(byteFile));
+>>>>>>> ca1901474a42e43156dabac66486da056433aaf7
                             }
                             else
                             {
@@ -162,6 +191,11 @@ namespace Server
                             if (ViewModelSend.Id != -1)
                             {
                                 FileInfoFTP SendFileInfo = JsonConvert.DeserializeObject<FileInfoFTP>(ViewModelSend.Message);
+<<<<<<< HEAD
+                                File.WriteAllBytes(Users[ViewModelSend.Id].temp_src + SendFileInfo.Name, SendFileInfo.Data);
+=======
+                                File.WriteAllBytes(Users[ViewModelSend.Id].temp_src + @"\" + SendFileInfo.Name, SendFileInfo.Data);
+>>>>>>> ca1901474a42e43156dabac66486da056433aaf7
                                 viewModelMessage = new ViewModelMessage("message", "Файл загружен");
                             }
                             else
