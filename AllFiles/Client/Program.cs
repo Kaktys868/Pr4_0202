@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ftp_Dan_True;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    internal class Program
+    public class Program
     {
         public static IPAddress IpAdress;
         public static int Port;
